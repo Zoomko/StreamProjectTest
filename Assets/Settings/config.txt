@@ -1,0 +1,1 @@
+{"Server address":"185.246.65.199","Server port":"9090"}
