@@ -9,5 +9,9 @@ namespace Assets.CodeBase.App
 
         [JsonProperty("Server port")]
         public string ServerPort { get; set; }
+        public override string ToString()
+        {
+            return ServerAddress + ":" + ServerPort;
+        }
     }
 }

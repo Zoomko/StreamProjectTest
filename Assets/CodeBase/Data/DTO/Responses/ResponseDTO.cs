@@ -8,6 +8,6 @@ namespace Assets.CodeBase.DTO.Responses
         public string Operation { get; set; }
 
         [JsonProperty("value")]
-        public float Value { get; set; }
+        public string Value { get; set; }
     }
 }

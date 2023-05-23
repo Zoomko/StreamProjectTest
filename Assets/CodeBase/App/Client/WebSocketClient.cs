@@ -1,63 +1,104 @@
 using Assets.CodeBase.App;
-using Assets.CodeBase.Services;
+using Assets.CodeBase.DTO.Responses;
+using Assets.CodeBase.Odometer;
 using NativeWebSocket;
+using Newtonsoft.Json;
+using System;
+using System.Globalization;
+using System.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
-public class WebSocketClient
+public class WebSocketClient : ITickable, IDisposable
 {
-    private readonly ILoadSaveDataFormat _loadSaveDataFormat;
-    private readonly WebSocket _webSocket;
+    public Action Connected;
+    public Action Disconnected;
 
-    public WebSocketClient(ILoadSaveDataFormat loadSaveDataFormat)
+    private readonly OdometerController _odometerController;
+    private readonly IResourcesProvider _resourcesProvider;
+    private WebSocket _webSocket;    
+
+    private bool _isInSession = false;
+
+    public WebSocketClient(OdometerController odometerController, IResourcesProvider resourcesProvider)
     {
-        _loadSaveDataFormat = loadSaveDataFormat;
-        var connectInfo = _loadSaveDataFormat.Load<Config>(Paths.ConfigPath);
-        _webSocket = CreateWebSocket(connectInfo.ServerAddress,connectInfo.ServerPort);
+        _odometerController = odometerController;
+        _resourcesProvider = resourcesProvider;
     }
 
-    private WebSocket CreateWebSocket(string IP, string port)
+    public void CreateWebSocket()
     {
-        var webSocket = new WebSocket("ws://"+IP+":"+port+"/ws");
-        webSocket.OnOpen += OnOpen;
-        webSocket.OnError += OnError;
-        webSocket.OnClose += OnClose;
-        webSocket.OnMessage += OnMessage;
-        return webSocket;
+        var address = "ws://" + _resourcesProvider.Config.ToString() + "/ws";
+        _webSocket = new WebSocket(address);
+        _webSocket.OnOpen += OnOpen;
+        _webSocket.OnError += OnError;
+        _webSocket.OnClose += OnClose;
+        _webSocket.OnMessage += OnMessage;
     }
 
-    public void Connect()
+    public async void Connect()
     {
-        _webSocket.Connect();
+        _isInSession = true;
+        await _webSocket.Connect();
     }
 
-    public void Disconnect()
+    public async void Disconnect()
     {
-        _webSocket.Close();
+        _isInSession = false;
+        await _webSocket.Close();
     }
-    
-    public void Send(string text)
+
+    public async void Send(string text)
     {
-        _webSocket.SendText(text);
+        await _webSocket.SendText(text);
+    }
+
+    public void Tick()
+    {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        if (_webSocket != null)
+        {
+            _webSocket.DispatchMessageQueue();
+        }
+#endif
+    }
+
+    public void Dispose()
+    {
+        Disconnect();
     }
 
     private void OnOpen()
     {
         Debug.Log("Connection open!");
+        Connected?.Invoke();
     }
 
     private void OnMessage(byte[] data)
     {
         var message = System.Text.Encoding.UTF8.GetString(data);
+        var response = JsonConvert.DeserializeObject<ResponseDTO>(message);
+        var value = response.Value;
+        var floatValue = float.Parse(value, CultureInfo.InvariantCulture);
+        _odometerController.SetValue(floatValue);
+
         Debug.Log("OnMessage! " + message);
     }
 
-    private void OnClose(WebSocketCloseCode closeCode)
+    private async void OnClose(WebSocketCloseCode closeCode)
     {
         Debug.Log("Connection closed!");
+        Disconnected?.Invoke();
+
+        if (_isInSession)
+        {
+            await Task.Delay(_resourcesProvider.AppSettings.TimeToReconnect * 1000);
+            await _webSocket.Connect();
+        }
     }
 
     private void OnError(string errorMsg)
     {
         Debug.Log("Error! " + errorMsg);
-    }    
+    }
 }

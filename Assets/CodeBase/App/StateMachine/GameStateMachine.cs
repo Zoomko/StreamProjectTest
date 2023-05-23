@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Assets.CodeBase.App.Services;
+using Assets.CodeBase.Odometer;
+using Assets.CodeBase.Services;
+using System;
 using System.Collections.Generic;
 
 namespace Assets.CodeBase.App.StateMachine
@@ -7,9 +10,20 @@ namespace Assets.CodeBase.App.StateMachine
     {
         private Dictionary<Type, IState> _states;
         private IState _currentState;
-        public GameStateMachine()
+        public GameStateMachine(IResourcesProvider resourcesProvider,
+                                ISceneService sceneService,
+                                WebSocketClient webSocketClient,
+                                GameFactory gameFactory,
+                                OdometerController odometerController)
         {
-
+            _states = new Dictionary<Type, IState>
+            {
+                { typeof(LoadDataState), new LoadDataState(this, resourcesProvider) },
+                { typeof(LoadSceneState), new LoadSceneState(this, sceneService) },
+                { typeof(CreateObjectsState), new CreateObjectsState(this, resourcesProvider, webSocketClient,gameFactory,odometerController) },
+                { typeof(GameState), new GameState(this, webSocketClient) },
+              
+            };
         }
 
         public void Enter<T>() where T : INoneParameterizedState
