@@ -17,5 +17,6 @@ public class ProjectContext : MonoInstaller
         Container.Bind<OdometerController>().AsSingle();
         Container.Bind<IResourcesProvider>().To<ResourcesProvider>().AsSingle();
         Container.Bind<GameFactory>().AsSingle();
+        Container.Bind<AudioController>().FromNewComponentOnNewGameObject().AsSingle();
     }
 }

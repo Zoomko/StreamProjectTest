@@ -14,14 +14,20 @@ namespace Assets.CodeBase.App.StateMachine
                                 ISceneService sceneService,
                                 WebSocketClient webSocketClient,
                                 GameFactory gameFactory,
-                                OdometerController odometerController)
+                                OdometerController odometerController,
+                                AudioController audioController)
         {
             _states = new Dictionary<Type, IState>
             {
                 { typeof(LoadDataState), new LoadDataState(this, resourcesProvider) },
                 { typeof(LoadSceneState), new LoadSceneState(this, sceneService) },
-                { typeof(CreateObjectsState), new CreateObjectsState(this, resourcesProvider, webSocketClient,gameFactory,odometerController) },
-                { typeof(GameState), new GameState(this, webSocketClient) },
+                { typeof(CreateObjectsState), new CreateObjectsState(
+                    this,
+                    resourcesProvider,
+                    webSocketClient,
+                    gameFactory,
+                    odometerController) },
+                { typeof(GameState), new GameState(this, webSocketClient,audioController) },
               
             };
         }

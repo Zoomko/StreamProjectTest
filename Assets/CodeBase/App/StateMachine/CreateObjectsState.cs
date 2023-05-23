@@ -11,6 +11,7 @@ namespace Assets.CodeBase.App.StateMachine
         private readonly WebSocketClient _webSocketClient;
         private readonly GameFactory _gameFactory;
         private readonly OdometerController _odometerController;
+        private readonly AudioController _audioController;
 
         public CreateObjectsState(GameStateMachine gameStateMachine, IResourcesProvider resourcesProvider, WebSocketClient webSocketClient, GameFactory gameFactory, OdometerController odometerController)
         {
@@ -18,7 +19,7 @@ namespace Assets.CodeBase.App.StateMachine
             _resourcesProvider = resourcesProvider;           
             _webSocketClient = webSocketClient;
             _gameFactory = gameFactory;
-            _odometerController = odometerController;
+            _odometerController = odometerController;           
         }
 
         public void Enter()
@@ -27,8 +28,10 @@ namespace Assets.CodeBase.App.StateMachine
 
             var odometerView = _gameFactory.CreateOdometer();
             _odometerController.SetView(odometerView);
+
             var hud = _gameFactory.CreateHUD();
             hud.Constructor(_webSocketClient, _resourcesProvider);
+
             _gameStateMachine.Enter<GameState>();
         }
 

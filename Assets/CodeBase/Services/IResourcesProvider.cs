@@ -10,6 +10,8 @@ namespace Assets.CodeBase.App
         Config Config { get; }
         AppSettings AppSettings { get; }
         GameObject HUD { get; }
+        GameObject Menu { get; }
+        SoundsData Sounds { get; }
         void Load(); 
     }
 }
