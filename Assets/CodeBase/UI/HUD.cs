@@ -12,10 +12,12 @@ namespace Assets.CodeBase.UI
 
         private StatusLamp _statusLamp;
         public StatusLamp StatusLamp => _statusLamp;
+
         private void Awake()
         {
             _statusLamp = GetComponentInChildren<StatusLamp>();
         }
+
         public void Constructor(WebSocketClient webSocketClient, IResourcesProvider resourcesProvider)
         {
             _statusLamp.Constructor(resourcesProvider, webSocketClient);
