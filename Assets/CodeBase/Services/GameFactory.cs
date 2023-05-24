@@ -1,6 +1,7 @@
 ﻿using Assets.CodeBase.App;
 using Assets.CodeBase.Odometer;
 using Assets.CodeBase.UI;
+using Assets.CodeBase.UI.Menu;
 using UnityEngine;
 
 namespace Assets.CodeBase.Services
@@ -41,9 +42,11 @@ namespace Assets.CodeBase.Services
             return hud;
         }
 
-        public void CreateMenu()
+        public MenuView CreateMenu()
         {
-            var menuGameObject = GameObject.Instantiate(_resourcesProvider.Menu);           
+            var menuGameObject = GameObject.Instantiate(_resourcesProvider.Menu);    
+            var menuView = menuGameObject.GetComponent<MenuView>();
+            return menuView;
         }
     }
 }

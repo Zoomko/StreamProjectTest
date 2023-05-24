@@ -1,19 +1,22 @@
 using Assets.CodeBase.App;
+using Assets.CodeBase.Services;
 using UnityEngine;
 using Zenject;
 
 public class AudioController : MonoBehaviour
 {
-    IResourcesProvider _resourcesProvider;
+    private IResourcesProvider _resourcesProvider;
+    private IPersistentDataService _persistentDataService;
 
     private AudioSource _musicSource;
     private AudioSource _soundSource;
     private AudioListener _listener;
 
     [Inject]
-    public void Constructor(IResourcesProvider resourcesProvider)
+    public void Constructor(IResourcesProvider resourcesProvider,IPersistentDataService persistentDataService)
     {
         _resourcesProvider = resourcesProvider;
+        _persistentDataService = persistentDataService;
     }   
 
     private void Awake()
@@ -24,6 +27,14 @@ public class AudioController : MonoBehaviour
 
         _musicSource.loop = true;
         _soundSource.loop = false;
+    }
+    public void InitializeValues()
+    {
+        SetSoundsVolume(_persistentDataService.Config.AudioSettings.SoundsVolume);
+        SetMusicVolume(_persistentDataService.Config.AudioSettings.MusicVolume);
+
+        SetSoundsMute(_persistentDataService.Config.AudioSettings.SoundsMute);
+        SetMusicMute(_persistentDataService.Config.AudioSettings.MisucMute);
     }
 
     public void PlayMusic()

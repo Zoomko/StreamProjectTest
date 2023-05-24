@@ -9,16 +9,13 @@ namespace Assets.CodeBase.Services
     {
         private readonly ILoadSaveDataFormat _loadSaveDataFormat;
 
-        private GameObject _odometer;
-        private Config _config;
+        private GameObject _odometer;        
         private AppSettings _appSettings;
         private GameObject _hud;
         private GameObject _menu;
         private SoundsData _sounds;
 
         public GameObject Odometer => _odometer;
-
-        public Config Config  => _config;
         public AppSettings AppSettings => _appSettings;
         public GameObject HUD => _hud;
         public GameObject Menu => _menu;
@@ -32,8 +29,7 @@ namespace Assets.CodeBase.Services
 
         public void Load()
         {
-            LoadOdometer();
-            LoadConfig();
+            LoadOdometer();            
             LoadAppSettings();
             LoadHUD();
             LoadMenu();
@@ -42,8 +38,6 @@ namespace Assets.CodeBase.Services
 
         private void LoadOdometer()
             => _odometer = Resources.Load<GameObject>(Paths.OdometerPath);
-        private void LoadConfig()
-            =>_config = _loadSaveDataFormat.Load<Config>(Paths.ConfigPath);
         private void LoadAppSettings()
             => _appSettings = Resources.Load<AppSettings>(Paths.AppSettingsPath);
         private void LoadHUD()

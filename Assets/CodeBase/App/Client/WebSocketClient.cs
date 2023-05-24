@@ -1,6 +1,7 @@
 using Assets.CodeBase.App;
 using Assets.CodeBase.DTO.Responses;
 using Assets.CodeBase.Odometer;
+using Assets.CodeBase.Services;
 using NativeWebSocket;
 using Newtonsoft.Json;
 using System;
@@ -15,20 +16,22 @@ public class WebSocketClient : ITickable, IDisposable
     public Action Disconnected;
 
     private readonly OdometerController _odometerController;
+    private readonly IPersistentDataService _persistentDataService;
     private readonly IResourcesProvider _resourcesProvider;
     private WebSocket _webSocket;    
 
     private bool _isInSession = false;
 
-    public WebSocketClient(OdometerController odometerController, IResourcesProvider resourcesProvider)
+    public WebSocketClient(OdometerController odometerController,IResourcesProvider resourcesProvider, IPersistentDataService persistentDataService)
     {
-        _odometerController = odometerController;
         _resourcesProvider = resourcesProvider;
+        _odometerController = odometerController;
+        _persistentDataService = persistentDataService;   
     }
 
     public void CreateWebSocket()
     {
-        var address = "ws://" + _resourcesProvider.Config.ToString() + "/ws";
+        var address = "ws://" + _persistentDataService.Config.ServerSettings.ServerAddress+":"+ _persistentDataService.Config.ServerSettings.ServerPort + "/ws";
         _webSocket = new WebSocket(address);
         _webSocket.OnOpen += OnOpen;
         _webSocket.OnError += OnError;

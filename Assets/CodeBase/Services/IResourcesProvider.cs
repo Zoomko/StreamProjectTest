@@ -6,8 +6,7 @@ namespace Assets.CodeBase.App
 {
     public interface IResourcesProvider
     {
-        GameObject Odometer { get; }
-        Config Config { get; }
+        GameObject Odometer { get; }       
         AppSettings AppSettings { get; }
         GameObject HUD { get; }
         GameObject Menu { get; }

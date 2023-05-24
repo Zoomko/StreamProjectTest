@@ -3,6 +3,7 @@ using Assets.CodeBase.App.Services;
 using Assets.CodeBase.App.StateMachine;
 using Assets.CodeBase.Odometer;
 using Assets.CodeBase.Services;
+using Assets.CodeBase.UI.Menu;
 using Zenject;
 
 public class ProjectContext : MonoInstaller
@@ -18,5 +19,7 @@ public class ProjectContext : MonoInstaller
         Container.Bind<IResourcesProvider>().To<ResourcesProvider>().AsSingle();
         Container.Bind<GameFactory>().AsSingle();
         Container.Bind<AudioController>().FromNewComponentOnNewGameObject().AsSingle();
+        Container.Bind<IPersistentDataService>().To<PersistentDataService>().AsSingle();
+        Container.Bind<MenuController>().AsSingle();
     }
 }
