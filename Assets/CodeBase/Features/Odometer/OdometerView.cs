@@ -6,7 +6,16 @@ namespace Assets.CodeBase.Odometer
 {
     public class OdometerView : MonoBehaviour
     {
-        private OdometerNumberPart[] _odometerNumberParts;      
+        private OdometerNumberPart[] _odometerNumberParts;     
+        
+        public void Constructor(AudioController audioController)
+        {
+            foreach(var part in _odometerNumberParts)
+            {
+                part.Constructor(audioController);
+            }
+        }
+
         private void Awake()
         {
             _odometerNumberParts = GetComponentsInChildren<OdometerNumberPart>();
