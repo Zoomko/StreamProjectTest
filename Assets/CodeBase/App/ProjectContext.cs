@@ -25,7 +25,7 @@ public class ProjectContext : MonoInstaller
         Container.Bind<MenuController>().AsSingle();
         Container.Bind<MessageSender>().AsSingle();
         Container.Bind<MessageDispatcher>().AsSingle();
-        Container.Bind<HUDController>().AsSingle();
+        Container.BindInterfacesAndSelfTo<HUDController>().AsSingle();
         Container.Bind<Notifyer>().FromComponentsInNewPrefabResource(Paths.NotyfierPath).AsSingle();
     }
 }

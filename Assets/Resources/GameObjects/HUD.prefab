@@ -224,11 +224,11 @@ MonoBehaviour:
   screen: {fileID: 0}
   canvasScreen: {fileID: 2905018108637885315}
   texture: {fileID: 0}
-  path: rtsp://localhost:8554
+  path: 
   flipTextureX: 1
   flipTextureY: 1
   automaticallyFlipOnAndroid: 1
-  playOnAwake: 1
+  playOnAwake: 0
   logToConsole: 0
 --- !u!1 &728770213278764271
 GameObject:

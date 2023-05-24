@@ -19,6 +19,7 @@ namespace Assets.CodeBase.UI
         [SerializeField]
         private Toggle _falseToggle;
         private StatusLamp _statusLamp;
+        private VLCPlayerExample _playerExample;
 
         public StatusLamp StatusLamp => _statusLamp;
         public Button MenuButton => _menuButton;
@@ -27,10 +28,12 @@ namespace Assets.CodeBase.UI
         public Button GetRandomOdometerValueButton => _getRandomOdometerValueButton;
         public Toggle TrueToggle => _trueToggle;
         public Toggle FalseToggle => _falseToggle;
+        public VLCPlayerExample PlayerExample  => _playerExample;
 
         private void Awake()
         {
             _statusLamp = GetComponentInChildren<StatusLamp>();
+            _playerExample = GetComponentInChildren<VLCPlayerExample>();
         }
     }
 }
