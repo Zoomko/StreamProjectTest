@@ -21,6 +21,10 @@ namespace Assets.CodeBase.App
         public string ServerAddress { get; set; }
         public string ServerPort { get; set; }
         public string BroadcastAddress { get; set; }
+        public override string ToString()
+        {
+            return ServerAddress+":"+ServerPort;
+        }
     }
 
 }

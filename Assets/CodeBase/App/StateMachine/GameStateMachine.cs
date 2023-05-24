@@ -1,6 +1,8 @@
-﻿using Assets.CodeBase.App.Services;
+﻿using Assets.CodeBase.App.Client;
+using Assets.CodeBase.App.Services;
 using Assets.CodeBase.Odometer;
 using Assets.CodeBase.Services;
+using Assets.CodeBase.UI.HUD;
 using Assets.CodeBase.UI.Menu;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,8 @@ namespace Assets.CodeBase.App.StateMachine
                                 OdometerController odometerController,
                                 AudioController audioController,
                                 IPersistentDataService persistentDataService,
+                                HUDController hudController,
+                                MessageSender messageSender,
                                 MenuController menuController)
         {
             _states = new Dictionary<Type, IState>
@@ -31,7 +35,9 @@ namespace Assets.CodeBase.App.StateMachine
                     gameFactory,
                     odometerController,
                     audioController,
-                    menuController) },
+                    hudController,
+                    menuController,
+                    messageSender) },
                 { typeof(GameState), new GameState(this, webSocketClient,audioController) },
               
             };

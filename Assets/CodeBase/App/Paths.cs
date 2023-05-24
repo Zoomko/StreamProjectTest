@@ -9,5 +9,6 @@
         public const string HUDPath = "GameObjects/HUD";
         public const string MenuPath = "GameObjects/Menu";
         public const string SoundsPath = "SoundsCollection";
+        public const string NotyfierPath = "GameObjects/Notifyer";
     }
 }

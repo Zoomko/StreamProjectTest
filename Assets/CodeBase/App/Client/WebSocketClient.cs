@@ -1,11 +1,8 @@
 using Assets.CodeBase.App;
-using Assets.CodeBase.DTO.Responses;
-using Assets.CodeBase.Odometer;
+using Assets.CodeBase.App.Client;
 using Assets.CodeBase.Services;
 using NativeWebSocket;
-using Newtonsoft.Json;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -15,23 +12,28 @@ public class WebSocketClient : ITickable, IDisposable
     public Action Connected;
     public Action Disconnected;
 
-    private readonly OdometerController _odometerController;
     private readonly IPersistentDataService _persistentDataService;
+    private readonly MessageDispatcher _messageDispatcher;
+    private readonly Notifyer _notifyer;
     private readonly IResourcesProvider _resourcesProvider;
-    private WebSocket _webSocket;    
+    private WebSocket _webSocket;
 
     private bool _isInSession = false;
 
-    public WebSocketClient(OdometerController odometerController,IResourcesProvider resourcesProvider, IPersistentDataService persistentDataService)
+    public WebSocketClient(IResourcesProvider resourcesProvider,
+                           IPersistentDataService persistentDataService,
+                           MessageDispatcher messageDispatcher,
+                           Notifyer notifyer)
     {
         _resourcesProvider = resourcesProvider;
-        _odometerController = odometerController;
-        _persistentDataService = persistentDataService;   
+        _persistentDataService = persistentDataService;
+        _messageDispatcher = messageDispatcher;
+        _notifyer = notifyer;
     }
 
     public void CreateWebSocket()
     {
-        var address = "ws://" + _persistentDataService.Config.ServerSettings.ServerAddress+":"+ _persistentDataService.Config.ServerSettings.ServerPort + "/ws";
+        var address = "ws://" + _persistentDataService.Config.ServerSettings.ToString() + "/ws";
         _webSocket = new WebSocket(address);
         _webSocket.OnOpen += OnOpen;
         _webSocket.OnError += OnError;
@@ -74,23 +76,20 @@ public class WebSocketClient : ITickable, IDisposable
     private void OnOpen()
     {
         Debug.Log("Connection open!");
+        _notifyer.Close();
         Connected?.Invoke();
     }
 
     private void OnMessage(byte[] data)
     {
-        var message = System.Text.Encoding.UTF8.GetString(data);
-        var response = JsonConvert.DeserializeObject<ResponseDTO>(message);
-        var value = response.Value;
-        var floatValue = float.Parse(value, CultureInfo.InvariantCulture);
-        _odometerController.SetValue(floatValue);
-
-        Debug.Log("OnMessage! " + message);
+        _messageDispatcher.OnMessageComes(data);
     }
 
     private async void OnClose(WebSocketCloseCode closeCode)
     {
         Debug.Log("Connection closed!");
+        _notifyer.Open();
+        _notifyer.SetMessage("Connection lost, trying to reconnect");
         Disconnected?.Invoke();
 
         if (_isInSession)

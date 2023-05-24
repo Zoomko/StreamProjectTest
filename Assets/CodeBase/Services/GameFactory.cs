@@ -9,15 +9,15 @@ namespace Assets.CodeBase.Services
     public class GameFactory
     {
         private readonly IResourcesProvider _resourcesProvider;
-        private readonly AudioController _audioController;
+        private readonly AudioController _audioController;       
 
         private OdometerView _odometerView;
-        private HUD _hud;    
+        private HUDView _hud;    
             
         public GameFactory(IResourcesProvider resourcesProvider, AudioController audioController)
         {            
             _resourcesProvider = resourcesProvider;
-            _audioController = audioController;
+            _audioController = audioController;         
         }
 
         public OdometerView CreateOdometer()
@@ -28,10 +28,10 @@ namespace Assets.CodeBase.Services
             return odometerView;
         }
 
-        public HUD CreateHUD()
+        public HUDView CreateHUD()
         {
             var hudGameObject = GameObject.Instantiate(_resourcesProvider.HUD);
-            var hud = hudGameObject.GetComponent<HUD>();
+            var hud = hudGameObject.GetComponent<HUDView>();
 
             hud.GetCurrentOdometerValueButton.onClick.AddListener(_audioController.PlayButtonClick);
             hud.GetRandomOdometerValueButton.onClick.AddListener(_audioController.PlayButtonClick);
@@ -46,6 +46,9 @@ namespace Assets.CodeBase.Services
         {
             var menuGameObject = GameObject.Instantiate(_resourcesProvider.Menu);    
             var menuView = menuGameObject.GetComponent<MenuView>();
+
+            menuView.CloseButton.onClick.AddListener(_audioController.PlayButtonClick);
+            menuView.SaveButton.onClick.AddListener(_audioController.PlayButtonClick);
             return menuView;
         }
     }

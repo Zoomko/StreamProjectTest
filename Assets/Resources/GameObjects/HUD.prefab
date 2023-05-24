@@ -2280,6 +2280,8 @@ MonoBehaviour:
   _startBroadcastButton: {fileID: 526366516455289005}
   _getCurrentOdometerValueButton: {fileID: 2476295872910886210}
   _getRandomOdometerValueButton: {fileID: 3456503712093660887}
+  _trueToggle: {fileID: 8286564547650455637}
+  _falseToggle: {fileID: 6642282000180079847}
 --- !u!1 &9161435063167071948
 GameObject:
   m_ObjectHideFlags: 0

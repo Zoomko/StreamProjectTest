@@ -1,8 +1,10 @@
 using Assets.CodeBase.App;
+using Assets.CodeBase.App.Client;
 using Assets.CodeBase.App.Services;
 using Assets.CodeBase.App.StateMachine;
 using Assets.CodeBase.Odometer;
 using Assets.CodeBase.Services;
+using Assets.CodeBase.UI.HUD;
 using Assets.CodeBase.UI.Menu;
 using Zenject;
 
@@ -21,5 +23,9 @@ public class ProjectContext : MonoInstaller
         Container.Bind<AudioController>().FromNewComponentOnNewGameObject().AsSingle();
         Container.Bind<IPersistentDataService>().To<PersistentDataService>().AsSingle();
         Container.Bind<MenuController>().AsSingle();
+        Container.Bind<MessageSender>().AsSingle();
+        Container.Bind<MessageDispatcher>().AsSingle();
+        Container.Bind<HUDController>().AsSingle();
+        Container.Bind<Notifyer>().FromComponentsInNewPrefabResource(Paths.NotyfierPath).AsSingle();
     }
 }
