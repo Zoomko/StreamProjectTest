@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Assets.CodeBase.App.Services
+namespace Assets.CodeBase.Services
 {
-    public class CoroutineRunner:MonoBehaviour
+    public class CoroutineRunner : MonoBehaviour
     {
     }
 }

@@ -1,22 +1,21 @@
-﻿using Assets.CodeBase.App;
-using Assets.CodeBase.UI;
+﻿using Assets.CodeBase.Services;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.CodeBase.Features.Lamp
 {
-    public class StatusLamp:MonoBehaviour
-    {        
+    public class StatusLamp : MonoBehaviour
+    {
         private ConnectionStatus _connectionStatus;
         private WebSocketClient _websocketClient;
         private Image _image;
         private Color _onlineColor;
-        private Color _offlineColor;       
-        private float _changeColorTime;   
-        
+        private Color _offlineColor;
+        private float _changeColorTime;
+
         public void Constructor(IResourcesProvider resourceProvider, WebSocketClient webSocketClient)
-        {       
+        {
             _changeColorTime = resourceProvider.AppSettings.ChangeColorTime;
             _websocketClient = webSocketClient;
             SubscribeToEvents();
@@ -60,7 +59,7 @@ namespace Assets.CodeBase.Features.Lamp
             yield return ChangeLampColor(Color.black);
             yield return ChangeLampColor(targetColor);
 
-            if(_connectionStatus == ConnectionStatus.Online)
+            if (_connectionStatus == ConnectionStatus.Online)
             {
                 StartCoroutine(PulsingStatusColor());
             }
@@ -88,7 +87,7 @@ namespace Assets.CodeBase.Features.Lamp
                 yield return null;
             }
         }
-        
+
         private Color GetTargetColor()
         {
             Color targetColor;
@@ -110,6 +109,5 @@ namespace Assets.CodeBase.Features.Lamp
             _websocketClient.Connected -= OnConnected;
             _websocketClient.Disconnected -= OnDisconnected;
         }
-
     }
 }

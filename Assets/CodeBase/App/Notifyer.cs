@@ -1,28 +1,35 @@
 using TMPro;
 using UnityEngine;
 
-public class Notifyer : MonoBehaviour
+namespace Assets.CodeBase.App
 {
-    [SerializeField]
-    private GameObject _messagePanel;
-    [SerializeField]
-    private TextMeshProUGUI _textMesh;
-    private void Awake()
+    public class Notifyer : MonoBehaviour
     {
-        Close();
-    }
-    public void Open()
-    {        
-        if(_messagePanel != null)
-            _messagePanel.SetActive(true);
-    }
-    public void Close()
-    {
-        if (_messagePanel != null)
-            _messagePanel.SetActive(false);
-    }
-    public void SetMessage(string message)
-    {
-        _textMesh.text = message;
+        [SerializeField]
+        private GameObject _messagePanel;
+        [SerializeField]
+        private TextMeshProUGUI _textMesh;
+
+        private void Awake()
+        {
+            Close();
+        }
+
+        public void Open()
+        {
+            if (_messagePanel != null)
+                _messagePanel.SetActive(true);
+        }
+
+        public void Close()
+        {
+            if (_messagePanel != null)
+                _messagePanel.SetActive(false);
+        }
+
+        public void SetMessage(string message)
+        {
+            _textMesh.text = message;
+        }
     }
 }

@@ -3,7 +3,6 @@ using Assets.CodeBase.Odometer;
 using Assets.CodeBase.Services;
 using Assets.CodeBase.UI.HUD;
 using Assets.CodeBase.UI.Menu;
-using System;
 
 namespace Assets.CodeBase.App.StateMachine
 {
@@ -14,7 +13,7 @@ namespace Assets.CodeBase.App.StateMachine
         private readonly WebSocketClient _webSocketClient;
         private readonly GameFactory _gameFactory;
         private readonly OdometerController _odometerController;
-        private readonly AudioController _audioController;   
+        private readonly AudioController _audioController;
         private readonly HUDController _hudController;
         private readonly MenuController _menuController;
         private readonly MessageSender _messageSender;
@@ -24,17 +23,17 @@ namespace Assets.CodeBase.App.StateMachine
                                   WebSocketClient webSocketClient,
                                   GameFactory gameFactory,
                                   OdometerController odometerController,
-                                  AudioController audioController,                                 
+                                  AudioController audioController,
                                   HUDController hudController,
                                   MenuController menuController,
                                   MessageSender messageSender)
         {
             _gameStateMachine = gameStateMachine;
-            _resourcesProvider = resourcesProvider;           
+            _resourcesProvider = resourcesProvider;
             _webSocketClient = webSocketClient;
             _gameFactory = gameFactory;
             _odometerController = odometerController;
-            _audioController = audioController;           
+            _audioController = audioController;
             _hudController = hudController;
             _menuController = menuController;
             _messageSender = messageSender;
@@ -65,7 +64,8 @@ namespace Assets.CodeBase.App.StateMachine
             hudView.MenuButton.onClick.AddListener(_menuController.OpenOrCloseWindow);
             hudView.GetCurrentOdometerValueButton.onClick.AddListener(_messageSender.SendCurrentValueMessage);
             hudView.GetRandomOdometerValueButton.onClick.AddListener(_messageSender.SendRandomStatusValueMessage);
-            _hudController.SetView(hudView);   
+            hudView.StartBroadcastButton.onClick.AddListener(_hudController.StartBroadcast);
+            _hudController.SetView(hudView);
         }
 
         private void CreateOdometer()
@@ -77,6 +77,6 @@ namespace Assets.CodeBase.App.StateMachine
         private void CreateWebSocket()
         {
             _webSocketClient.CreateWebSocket();
-        }        
+        }
     }
 }

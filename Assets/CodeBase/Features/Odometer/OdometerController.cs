@@ -1,6 +1,5 @@
 ﻿using Assets.CodeBase.App;
-using Assets.CodeBase.App.Services;
-
+using Assets.CodeBase.Services;
 
 namespace Assets.CodeBase.Odometer
 {
@@ -37,6 +36,5 @@ namespace Assets.CodeBase.Odometer
         {
             _view.SetFinalNumber(value);
         }
-
     }
 }

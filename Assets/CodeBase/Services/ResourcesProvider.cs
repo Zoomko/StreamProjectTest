@@ -19,7 +19,6 @@ namespace Assets.CodeBase.Services
         public AppSettings AppSettings => _appSettings;
         public GameObject HUD => _hud;
         public GameObject Menu => _menu;
-
         public SoundsData Sounds  => _sounds;
 
         public ResourcesProvider(ILoadSaveDataFormat loadSaveDataFormat)
@@ -38,12 +37,16 @@ namespace Assets.CodeBase.Services
 
         private void LoadOdometer()
             => _odometer = Resources.Load<GameObject>(Paths.OdometerPath);
+
         private void LoadAppSettings()
             => _appSettings = Resources.Load<AppSettings>(Paths.AppSettingsPath);
+
         private void LoadHUD()
             => _hud = Resources.Load<GameObject>(Paths.HUDPath);
+
         private void LoadMenu() 
             => _menu = Resources.Load<GameObject>(Paths.MenuPath);
+
         private void LoadSounds()
             => _sounds = Resources.Load<SoundsData>(Paths.SoundsPath);
     }

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Assets.CodeBase.DTO.Responses
+namespace Assets.CodeBase.Data.DTO.Responses
 {
     public class ResponseOdometerValueDTO
     {

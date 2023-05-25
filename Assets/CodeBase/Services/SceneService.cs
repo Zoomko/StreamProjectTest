@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.CodeBase.Services;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ namespace Assets.CodeBase.App.Services
     public class SceneService : ISceneService
     {
         private readonly CoroutineRunner _coroutineService;
+
         public SceneService(CoroutineRunner coroutineObject)
         {
             _coroutineService = coroutineObject;

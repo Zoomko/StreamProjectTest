@@ -1,5 +1,4 @@
 ﻿using Assets.CodeBase.App.Client;
-using Assets.CodeBase.App.Services;
 using Assets.CodeBase.Odometer;
 using Assets.CodeBase.Services;
 using Assets.CodeBase.UI.HUD;
@@ -26,8 +25,15 @@ namespace Assets.CodeBase.App.StateMachine
         {
             _states = new Dictionary<Type, IState>
             {
-                { typeof(LoadDataState), new LoadDataState(this,persistentDataService, resourcesProvider) },
-                { typeof(LoadSceneState), new LoadSceneState(this, sceneService) },
+                { typeof(LoadDataState), new LoadDataState(
+                    this,
+                    persistentDataService,
+                    resourcesProvider) },
+
+                { typeof(LoadSceneState), new LoadSceneState(
+                    this,
+                    sceneService) },
+
                 { typeof(CreateObjectsState), new CreateObjectsState(
                     this,
                     resourcesProvider,
@@ -38,8 +44,12 @@ namespace Assets.CodeBase.App.StateMachine
                     hudController,
                     menuController,
                     messageSender) },
-                { typeof(GameState), new GameState(this, webSocketClient,audioController) },
-              
+
+                { typeof(GameState), new GameState(
+                    this,
+                    webSocketClient,
+                    audioController) },
+
             };
         }
 

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
-using System;
 
 namespace Assets.CodeBase.Services
 {
@@ -11,13 +10,14 @@ namespace Assets.CodeBase.Services
         {
             _serializer = new JsonSerializer();
         }
+
         public T Load<T>(string path)
         {
             T data = default;
             if (File.Exists(path))
             {
                 using (StreamReader file = File.OpenText(path))
-                {                                        
+                {
                     data = (T)_serializer.Deserialize(file, typeof(T));
                 }
             }
@@ -29,7 +29,7 @@ namespace Assets.CodeBase.Services
         public void Save<T>(string path, T data)
         {
             using (StreamWriter file = File.CreateText(path))
-            {                
+            {
                 _serializer.Serialize(file, data);
             }
         }

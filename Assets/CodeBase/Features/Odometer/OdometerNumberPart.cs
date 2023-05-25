@@ -1,5 +1,4 @@
-using System;
-using Unity.VisualScripting;
+using Assets.CodeBase.App;
 using UnityEngine;
 
 namespace Assets.CodeBase.Odometer
@@ -13,7 +12,7 @@ namespace Assets.CodeBase.Odometer
 
         private float _lastIntagerNumber = 0;
         private AudioController _audioController;
-        
+
         public void Constructor(AudioController audioController)
         {
             _audioController = audioController;
@@ -22,7 +21,7 @@ namespace Assets.CodeBase.Odometer
         private void Awake()
         {
             _startRotation = transform.localRotation;
-        }        
+        }
 
         public void SetRotationByNumber(float number)
         {
@@ -33,7 +32,7 @@ namespace Assets.CodeBase.Odometer
         private void MakeTickSound(float number)
         {
             var currentIntegerNumber = Mathf.Floor(number);
-            if(currentIntegerNumber != _lastIntagerNumber)
+            if (currentIntegerNumber != _lastIntagerNumber)
             {
                 _audioController.PlayOdometerTick();
             }

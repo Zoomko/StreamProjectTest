@@ -1,4 +1,4 @@
-﻿using Assets.CodeBase.App.Services;
+﻿using Assets.CodeBase.Services;
 
 namespace Assets.CodeBase.App.StateMachine
 {
@@ -19,13 +19,13 @@ namespace Assets.CodeBase.App.StateMachine
             _sceneService.Load(sceneName, OnLoad);
         }
 
+        public void Exit()
+        {
+        }
+
         private void OnLoad()
         {
             _gameStateMachine.Enter<CreateObjectsState>();
-        }
-
-        public void Exit()
-        {
         }
     }
 }

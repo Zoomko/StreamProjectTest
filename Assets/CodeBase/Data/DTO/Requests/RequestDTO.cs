@@ -1,7 +1,10 @@
 using Newtonsoft.Json;
 
-public class RequestDTO
+namespace Assets.CodeBase.Data.DTO.Requests
 {
-    [JsonProperty("operation")]
-    public string Operation { get; set; }
+    public class RequestDTO
+    {
+        [JsonProperty("operation")]
+        public string Operation { get; set; }
+    }
 }

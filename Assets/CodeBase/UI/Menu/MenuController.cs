@@ -1,4 +1,5 @@
-﻿using Assets.CodeBase.Services;
+﻿using Assets.CodeBase.App;
+using Assets.CodeBase.Services;
 using UnityEngine;
 
 namespace Assets.CodeBase.UI.Menu
@@ -9,6 +10,7 @@ namespace Assets.CodeBase.UI.Menu
         private readonly IPersistentDataService _persistentDataService;
         private MenuView _view;
         private MenuModel _model;
+
         public MenuController(GameFactory gameFactory, AudioController audioController, IPersistentDataService persistentDataService)
         {
             _gameFactory = gameFactory;           
@@ -73,6 +75,5 @@ namespace Assets.CodeBase.UI.Menu
         {
             _persistentDataService.Save();           
         }
-
     }
 }

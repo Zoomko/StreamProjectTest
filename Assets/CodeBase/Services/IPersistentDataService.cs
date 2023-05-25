@@ -1,4 +1,4 @@
-﻿using Assets.CodeBase.App;
+﻿using Assets.CodeBase.Data;
 
 namespace Assets.CodeBase.Services
 {

@@ -1,77 +1,80 @@
-using Assets.CodeBase.App;
 using Assets.CodeBase.Services;
 using UnityEngine;
 using Zenject;
 
-public class AudioController : MonoBehaviour
+namespace Assets.CodeBase.App
 {
-    private IResourcesProvider _resourcesProvider;
-    private IPersistentDataService _persistentDataService;
-
-    private AudioSource _musicSource;
-    private AudioSource _soundSource;
-    private AudioListener _listener;
-
-    [Inject]
-    public void Constructor(IResourcesProvider resourcesProvider,IPersistentDataService persistentDataService)
+    public class AudioController : MonoBehaviour
     {
-        _resourcesProvider = resourcesProvider;
-        _persistentDataService = persistentDataService;
-    }   
+        private IResourcesProvider _resourcesProvider;
+        private IPersistentDataService _persistentDataService;
 
-    private void Awake()
-    {
-        _musicSource = gameObject.AddComponent<AudioSource>();
-        _soundSource = gameObject.AddComponent<AudioSource>();
-        _listener = gameObject.AddComponent<AudioListener>();
+        private AudioSource _musicSource;
+        private AudioSource _soundSource;
+        private AudioListener _listener;
 
-        _musicSource.loop = true;
-        _soundSource.loop = false;
-    }
-    public void InitializeValues()
-    {
-        SetSoundsVolume(_persistentDataService.Config.AudioSettings.SoundsVolume);
-        SetMusicVolume(_persistentDataService.Config.AudioSettings.MusicVolume);
+        [Inject]
+        public void Constructor(IResourcesProvider resourcesProvider, IPersistentDataService persistentDataService)
+        {
+            _resourcesProvider = resourcesProvider;
+            _persistentDataService = persistentDataService;
+        }
 
-        SetSoundsMute(_persistentDataService.Config.AudioSettings.SoundsMute);
-        SetMusicMute(_persistentDataService.Config.AudioSettings.MisucMute);
-    }
+        private void Awake()
+        {
+            _musicSource = gameObject.AddComponent<AudioSource>();
+            _soundSource = gameObject.AddComponent<AudioSource>();
+            _listener = gameObject.AddComponent<AudioListener>();
 
-    public void PlayMusic()
-    {
-        _musicSource.clip = _resourcesProvider.Sounds.SoundsCollection["BackgroundMusic"];
-        _musicSource.Play();        
-    }
+            _musicSource.loop = true;
+            _soundSource.loop = false;
+        }
 
-    public void PlayButtonClick()
-    {
-        _soundSource.clip = _resourcesProvider.Sounds.SoundsCollection["ButtonClick"];
-        _soundSource.Play();
-    }
+        public void InitializeValues()
+        {
+            SetSoundsVolume(_persistentDataService.Config.AudioSettings.SoundsVolume);
+            SetMusicVolume(_persistentDataService.Config.AudioSettings.MusicVolume);
 
-    public void PlayOdometerTick()
-    {
-        _soundSource.clip = _resourcesProvider.Sounds.SoundsCollection["RollTick"];
-        _soundSource.Play();
-    }
+            SetSoundsMute(_persistentDataService.Config.AudioSettings.SoundsMute);
+            SetMusicMute(_persistentDataService.Config.AudioSettings.MisucMute);
+        }
 
-    public void SetSoundsVolume(float value)
-    {
-        _soundSource.volume = value;
-    }
-    
-    public void SetMusicVolume(float value)
-    {
-        _musicSource.volume = value;
-    }
+        public void PlayMusic()
+        {
+            _musicSource.clip = _resourcesProvider.Sounds.SoundsCollection["BackgroundMusic"];
+            _musicSource.Play();
+        }
 
-    public void SetSoundsMute(bool value)
-    {
-        _soundSource.mute = value;
-    }
+        public void PlayButtonClick()
+        {
+            _soundSource.clip = _resourcesProvider.Sounds.SoundsCollection["ButtonClick"];
+            _soundSource.Play();
+        }
 
-    public void SetMusicMute(bool value)
-    {
-        _musicSource.mute = value;
+        public void PlayOdometerTick()
+        {
+            _soundSource.clip = _resourcesProvider.Sounds.SoundsCollection["RollTick"];
+            _soundSource.Play();
+        }
+
+        public void SetSoundsVolume(float value)
+        {
+            _soundSource.volume = value;
+        }
+
+        public void SetMusicVolume(float value)
+        {
+            _musicSource.volume = value;
+        }
+
+        public void SetSoundsMute(bool value)
+        {
+            _soundSource.mute = value;
+        }
+
+        public void SetMusicMute(bool value)
+        {
+            _musicSource.mute = value;
+        }
     }
 }

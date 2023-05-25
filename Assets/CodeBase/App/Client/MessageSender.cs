@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Assets.CodeBase.Data.DTO.Requests;
+using Newtonsoft.Json;
 
 namespace Assets.CodeBase.App.Client
 {

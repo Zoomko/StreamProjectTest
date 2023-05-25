@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.CodeBase.App.Services
+namespace Assets.CodeBase.Services
 {
     public interface ISceneService
     {

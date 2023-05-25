@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Assets.CodeBase.App
+﻿namespace Assets.CodeBase.Data
 {
     public class Config
     {
@@ -23,7 +21,7 @@ namespace Assets.CodeBase.App
         public string BroadcastAddress { get; set; }
         public override string ToString()
         {
-            return ServerAddress+":"+ServerPort;
+            return ServerAddress + ":" + ServerPort;
         }
     }
 

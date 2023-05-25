@@ -1,3 +1,4 @@
+using Assets.CodeBase.App;
 using Assets.CodeBase.Helper;
 using System;
 using UnityEngine;

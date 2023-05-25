@@ -1,4 +1,5 @@
-﻿using Assets.CodeBase.Services;
+﻿using Assets.CodeBase.App;
+using Assets.CodeBase.Services;
 using Zenject;
 
 namespace Assets.CodeBase.UI.HUD
@@ -22,8 +23,7 @@ namespace Assets.CodeBase.UI.HUD
         {
             _view = view;
             _player = _view.PlayerExample;
-            _player.path = _persistentDataService.Config.ServerSettings.BroadcastAddress;
-            _view.StartBroadcastButton.onClick.AddListener(StartBroadcast);
+            _player.path = _persistentDataService.Config.ServerSettings.BroadcastAddress;            
         }
 
         public void StartBroadcast()
