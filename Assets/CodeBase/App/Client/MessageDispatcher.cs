@@ -52,7 +52,8 @@ namespace Assets.CodeBase.App.Client
         private void OnRandomStatusValue(string message)
         {
             var requestObject = JsonConvert.DeserializeObject<ResponseRandomValueDTO>(message);
-            _odometerController.SetValue(requestObject.Value);
+            if (requestObject.Value != 0)
+                _odometerController.SetValue(requestObject.Value);
             _hudController.SetToggle(requestObject.Status);
         }
     }
