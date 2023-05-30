@@ -17,6 +17,7 @@ public class WebSocketClient : ITickable, IDisposable
     private readonly Notifyer _notifyer;
     private readonly IResourcesProvider _resourcesProvider;
     private WebSocket _webSocket;
+    private string _address;
 
     private bool _isInSession = false;
 
@@ -33,12 +34,9 @@ public class WebSocketClient : ITickable, IDisposable
 
     public void CreateWebSocket()
     {
-        var address = "ws://" + _persistentDataService.Config.ServerSettings.ToString() + "/ws";
-        _webSocket = new WebSocket(address);
-        _webSocket.OnOpen += OnOpen;
-        _webSocket.OnError += OnError;
-        _webSocket.OnClose += OnClose;
-        _webSocket.OnMessage += OnMessage;
+        _address = "ws://" + _persistentDataService.Config.ServerSettings.ToString() + "/ws";
+        _webSocket = new WebSocket(_address);
+        SubscribeToEvents();
     }
 
     public async void Connect()
@@ -71,6 +69,22 @@ public class WebSocketClient : ITickable, IDisposable
     public void Dispose()
     {
         Disconnect();
+    }
+
+    private void SubscribeToEvents()
+    {
+        _webSocket.OnOpen += OnOpen;
+        _webSocket.OnError += OnError;
+        _webSocket.OnClose += OnClose;
+        _webSocket.OnMessage += OnMessage;
+    }
+
+    private void UnsubscribeToEvents()
+    {
+        _webSocket.OnOpen -= OnOpen;
+        _webSocket.OnError -= OnError;
+        _webSocket.OnClose -= OnClose;
+        _webSocket.OnMessage -= OnMessage;
     }
 
     private void OnOpen()
