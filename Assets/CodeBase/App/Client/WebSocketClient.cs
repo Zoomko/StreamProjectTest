@@ -34,9 +34,22 @@ public class WebSocketClient : ITickable, IDisposable
 
     public void CreateWebSocket()
     {
-        _address = "ws://" + _persistentDataService.Config.ServerSettings.ToString() + "/ws";
+        _address = GetAddress();
         _webSocket = new WebSocket(_address);
         SubscribeToEvents();
+    }
+
+    public async void RecreateWebSocketWithNewAddress()
+    {
+        var newAddress = GetAddress();
+        if(_address != newAddress)
+        {
+            _address = newAddress;
+            await _webSocket.Close();
+            UnsubscribeToEvents();
+            CreateWebSocket();
+            await _webSocket.Connect();
+        }
     }
 
     public async void Connect()
@@ -70,6 +83,9 @@ public class WebSocketClient : ITickable, IDisposable
     {
         Disconnect();
     }
+
+    private string GetAddress() 
+        => "ws://" + _persistentDataService.Config.ServerSettings.ToString() + "/ws";
 
     private void SubscribeToEvents()
     {

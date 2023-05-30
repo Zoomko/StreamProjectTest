@@ -1,5 +1,6 @@
 ﻿using Assets.CodeBase.App;
 using Assets.CodeBase.Services;
+using Assets.CodeBase.UI.HUD;
 using TMPro;
 using UnityEngine;
 
@@ -9,13 +10,21 @@ namespace Assets.CodeBase.UI.Menu
     {
         private readonly GameFactory _gameFactory;   
         private readonly IPersistentDataService _persistentDataService;
+        private readonly WebSocketClient _webSocketClient;
+        private readonly HUDController _hudController;
         private MenuView _view;
         private MenuModel _model;
 
-        public MenuController(GameFactory gameFactory, AudioController audioController, IPersistentDataService persistentDataService)
+        public MenuController(GameFactory gameFactory,
+                              AudioController audioController,
+                              IPersistentDataService persistentDataService,
+                              WebSocketClient webSocketClient,
+                              HUDController hudController)
         {
             _gameFactory = gameFactory;           
             _persistentDataService = persistentDataService;
+            _webSocketClient = webSocketClient;
+            _hudController = hudController;
             _model = new MenuModel(audioController,persistentDataService);
         }
 
@@ -74,7 +83,9 @@ namespace Assets.CodeBase.UI.Menu
 
         private void SaveChanges()
         {
-            _persistentDataService.Save();           
+            _persistentDataService.Save();
+            _webSocketClient.RecreateWebSocketWithNewAddress();            
+            _hudController.StartAnotherBroadcastFromNewAddressIfPlayerIsPlaying();
         }
     }
 }

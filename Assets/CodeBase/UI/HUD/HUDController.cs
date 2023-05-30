@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Assets.CodeBase.UI.HUD
 {
-    public class HUDController: ITickable
+    public class HUDController : ITickable
     {
         private readonly IPersistentDataService _persistentDataService;
         private readonly AudioController _audioController;
@@ -23,12 +23,30 @@ namespace Assets.CodeBase.UI.HUD
         {
             _view = view;
             _player = _view.PlayerExample;
-            _player.path = _persistentDataService.Config.ServerSettings.BroadcastAddress;            
+            SetPath();
         }
 
         public void StartBroadcast()
         {
-            _player.Open();            
+            _player.Open();
+        }
+
+        public void StartAnotherBroadcastFromNewAddressIfPlayerIsPlaying()
+        {
+            var newPath = _persistentDataService.Config.ServerSettings.BroadcastAddress;
+            if (_player.path != newPath)
+            {
+                SetPath();
+                if (_player.IsPlaying)
+                {
+                    StartBroadcast();
+                }
+            }
+        }
+
+        public void SetPath()
+        {
+            _player.path = _persistentDataService.Config.ServerSettings.BroadcastAddress;
         }
 
         public void SetToggle(bool value)
