@@ -41,7 +41,6 @@ namespace Assets.CodeBase.UI.Menu
         public Button CloseButton => _closeButton;
         public Button SaveButton => _saveButton;
 
-
         private void Start()
         {
             _rootPanel.transform.localScale = Vector3.zero;
