@@ -4271,6 +4271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d4f6e45ac5b634aa7373792494786d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rootPanel: {fileID: 4493819850629720030}
   _serverIP: {fileID: 4493819850294383592}
   _serverPort: {fileID: 4493819850273484731}
   _broadcastAddress: {fileID: 4493819851067340642}

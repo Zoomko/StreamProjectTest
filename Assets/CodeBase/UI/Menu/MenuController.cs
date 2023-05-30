@@ -1,5 +1,6 @@
 ﻿using Assets.CodeBase.App;
 using Assets.CodeBase.Services;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.CodeBase.UI.Menu
@@ -22,12 +23,12 @@ namespace Assets.CodeBase.UI.Menu
         {
             _view = _gameFactory.CreateMenu();
             InitializeViewValues();
-            SubscribeToEvents();
+            SubscribeToEvents();           
         }
 
         public void CloseWindow()
         {    
-            GameObject.Destroy(_view.gameObject);
+            _view.Close();
         }
 
         public void OpenOrCloseWindow()
