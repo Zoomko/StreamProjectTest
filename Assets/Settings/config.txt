@@ -1,1 +1,1 @@
-{"ServerSettings":{"ServerAddress":"185.246.65.199","ServerPort":"9090","BroadcastAddress":"rtsp://localhost:8554/"},"AudioSettings":{"MusicVolume":0.0356200524,"SoundsVolume":0.0382585749,"MisucMute":false,"SoundsMute":false}}
+{"ServerSettings":{"ServerAddress":"185.246.65.199","ServerPort":"9090","BroadcastAddress":"rtsp://localhost:8554/"},"AudioSettings":{"MusicVolume":0.0883905,"SoundsVolume":0.0936675444,"MisucMute":false,"SoundsMute":false}}

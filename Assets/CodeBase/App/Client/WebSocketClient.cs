@@ -19,6 +19,7 @@ public class WebSocketClient : ITickable, IDisposable
     private WebSocket _webSocket;
     private string _address;
 
+    private bool _connectionIsOpen = false;
     private bool _isInSession = false;
 
     public WebSocketClient(IResourcesProvider resourcesProvider,
@@ -106,6 +107,7 @@ public class WebSocketClient : ITickable, IDisposable
     private void OnOpen()
     {
         Debug.Log("Connection open!");
+        _connectionIsOpen = true;
         _notifyer.Close();
         Connected?.Invoke();
     }
@@ -118,6 +120,7 @@ public class WebSocketClient : ITickable, IDisposable
     private async void OnClose(WebSocketCloseCode closeCode)
     {
         Debug.Log("Connection closed!");
+        _connectionIsOpen = false;
         _notifyer.Open();
         _notifyer.SetMessage("Connection lost, trying to reconnect");
         Disconnected?.Invoke();
@@ -125,7 +128,8 @@ public class WebSocketClient : ITickable, IDisposable
         if (_isInSession)
         {
             await Task.Delay(_resourcesProvider.AppSettings.TimeToReconnect * 1000);
-            await _webSocket.Connect();
+            if(!_connectionIsOpen)
+                await _webSocket.Connect();
         }
     }
 
